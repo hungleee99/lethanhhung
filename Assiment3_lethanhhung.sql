@@ -21,8 +21,8 @@ CREATE TABLE `Account`(
     DepartmentID TINYINT NOT NULL,
     PositionID TINYINT NOT NULL,
     CreateDate DATETIME DEFAULT NOW(),
-    FOREIGN KEY (DepartmentID) REFERENCES Department (DepartmentID),
-    FOREIGN KEY (PositionID) REFERENCES `Position` (PositionID)
+    FOREIGN KEY (DepartmentID) REFERENCES Department (DepartmentID) ON DELETE CASCADE,
+    FOREIGN KEY (PositionID) REFERENCES `Position` (PositionID) ON DELETE CASCADE
 );
 DROP TABLE IF EXISTS `Group`;
 CREATE TABLE `Group`(
@@ -80,7 +80,7 @@ CREATE TABLE Exam(
     Duration INT,
     CreatorID INT,
     CreateDate DATE,
-	FOREIGN KEY (CategoryID) REFERENCES CategoryQuestion (CategoryID)
+	FOREIGN KEY (CategoryID) REFERENCES CategoryQuestion (CategoryID) ON DELETE CASCADE
 );
 
 DROP  TABLE IF EXISTS ExamQuestion;
@@ -184,7 +184,7 @@ UPDATE		`Account`
 SET			FullName = N'Nguyễn bá Lộc'  , Email = 'loc.nguyenba@vti.com.vn'
 WHERE		AccountID =5;
 -- Q15 update acc id=5 thuoc gr id=4
-UPDATE		`Account`
+UPDATE		GroupAccount
 SET			AccountID =5
 WHERE		GroupID =4;
 
