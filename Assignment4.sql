@@ -8,12 +8,13 @@ WHERE			o.`status` = 'shipped'
 AND				o.shippedDate BETWEEN '2004/8/1' AND '2004/8/30';
 
 -- q2 
-SELECT 			c.customerName,p.amount AS profit
+SELECT 			c.customerName,(p.amount-buyPrice) AS profit
 FROM 			orders o
 JOIN			customers c
 ON 				o.customerNumber = c.customerNumber
 JOIN			payments p
 ON 				c.customerNumber = p.customerNumber
+JOIN 			products 			
 WHERE			o.`status` = 'shipped'
 GROUP BY		c.customerNumber;
 
