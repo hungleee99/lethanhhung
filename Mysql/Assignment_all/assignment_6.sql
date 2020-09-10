@@ -1,0 +1,228 @@
+USE qlybaithi;
+-- Q1
+DELIMITER $$
+	CREATE PROCEDURE Q1 (IN Name_pb VARCHAR(50))
+    BEGIN
+		SELECT 		A.* 
+		FROM		Department D 
+		INNER JOIN 	`Account` A ON D.DepartmentID = A.DepartmentID
+		WHERE		DepartmentName = Name_pb;
+    END $$
+DELIMITER ;
+CALL Q1('SALE');
+DROP PROCEDURE Q1;
+select* from Department;
+ -- Q2: chuyen vao thang groupid=1
+DROP PROCEDURE IF EXISTS Q2;
+ DELIMITER $$
+ CREATE PROCEDURE Q2(IN SL INT)
+ BEGIN
+	SELECT groupID, COUNT(accountID) FROM
+     groupaccount ga
+    WHERE GroupID = SL
+    GROUP BY groupID;
+ END $$
+ DELIMITER ;
+ CALL Q2(1);
+ 
+ -- Q3
+ DROP PROCEDURE IF EXISTS Q3;
+ DELIMITER $$
+ CREATE PROCEDURE Q3()
+ BEGIN
+	SELECT TypeID,COUNT(questionID)
+    FROM `Question`
+    WHERE MONTH(CreateDate) = MONTH(NOW())
+    GROUP BY TypeID;
+ END $$
+ DELIMITER ;
+ CALL Q3();
+ 
+ -- q4
+ DROP PROCEDURE IF EXISTS Q4;
+ DELIMITER $$
+ CREATE PROCEDURE Q4()
+ BEGIN
+	SELECT TypeID  ,COUNT(TypeID) AS DEM
+    FROM `Question`
+    GROUP BY TypeID
+    HAVING DEM = (SELECT MAX(MAXS.DEM1) FROM (SELECT TypeID ,COUNT(TypeID) AS DEM1
+    FROM `Question`
+    GROUP BY TypeID)AS MAXS);
+ END $$
+ DELIMITER ;
+ CALL Q4();
+ 
+ -- Q5
+DROP PROCEDURE IF EXISTS Q5;
+ DELIMITER $$
+ CREATE PROCEDURE Q5()
+ BEGIN
+	SELECT 	tq.TypeName  
+    FROM 	typequestion tq 
+    JOIN 	`Question` q
+    ON 		tq.TypeID = q.TypeID
+    WHERE 	q.questionID =4;
+ END $$
+ DELIMITER ;
+ CALL Q5();
+ 
+ -- Q6
+ DROP PROCEDURE IF EXISTS Q6;
+ DELIMITER $$
+ CREATE PROCEDURE Q6(IN CHUOI VARCHAR(50),IN LUACHON INT)
+ BEGIN
+	
+    IF LUACHON = 1 THEN
+		SELECT 	*
+        FROM	`Group`
+        WHERE	GroupName LIKE CHUOI;
+	ELSE
+		SELECT 	Email, Username, FullName
+        FROM	`Account`
+        WHERE	Username LIKE CHUOI;
+	END IF;
+    
+ END $$
+ DELIMITER ;
+ CALL Q6('T_LEADER',1);
+ 
+ -- Q7
+ DROP PROCEDURE IF EXISTS Q7;
+ DELIMITER $$
+ CREATE PROCEDURE Q7(IN CHUOI VARCHAR(50),IN CHUOI2 VARCHAR(50))
+ BEGIN
+	
+    DECLARE Username VARCHAR(50) DEFAULT SUBSTRING_INDEX(CHUOI,'@',1);
+    DECLARE PositionID TINYINT UNSIGNED DEFAULT 1;
+    DECLARE DepartmentID TINYINT UNSIGNED DEFAULT 10;
+    DECLARE CreateDate DATETIME DEFAULT NOW();
+	
+	INSERT INTO `Account` 	(Email		,Username, FullName		, DepartmentID,	PositionID,	CreateDate)
+    VALUE					(CHUOI		,Username, CHUOI2		, DepartmentID, PositionID, CreateDate);
+	
+    SELECT 	*
+    FROM 	`Account`A
+    WHERE	A.Username = Username;
+    
+ END $$
+ DELIMITER ;
+ CALL Q7('hung@gmail.com','hungleeee');
+ 
+ -- Q8
+ 
+ DROP PROCEDURE IF EXISTS Q8;
+ DELIMITER $$
+ CREATE PROCEDURE Q8(IN CHUOI VARCHAR(50))
+ BEGIN
+	IF (CHUOI = 'Essay') THEN
+		SELECT Content,MAX(LENGTH(Content)) FROM `question`
+        WHERE TypeID = 2;
+    ELSEIF (CHUOI = 'Multiple-Choice') THEN
+		SELECT MAX(LENGTH(content)) FROM `question`
+        WHERE typeID = 1;
+	END IF;
+    
+ END $$
+ DELIMITER ;
+ CALL Q8('Essay');
+ 
+ -- Q9
+ 
+ DROP PROCEDURE IF EXISTS Q9;
+ DELIMITER $$
+ CREATE PROCEDURE Q9(IN IN_ID INT)
+ BEGIN
+	DELETE FROM exam WHERE examID = IN_ID;
+    
+ END $$
+ DELIMITER ;
+ CALL Q9(1);
+ 
+ -- Q10
+DROP PROCEDURE IF EXISTS Q10;
+ DELIMITER $$
+ CREATE PROCEDURE Q10()
+ BEGIN
+	WITH TIM AS(
+		SELECT ExamID FROM exam WHERE (YEAR(NOW())-YEAR(CreateDate))>3
+				)
+        -- SELECT ExamID FROM TIM;
+		DELETE FROM Exam WHERE ExamID IN (SELECT ExamID FROM TIM) ;
+		SELECT ROW_COUNT();                   
+    
+ END $$
+ DELIMITER ;
+ CALL Q10();
+ SELECT ExamID FROM exam WHERE (YEAR(NOW())-YEAR(CreateDate)) >=3;
+ 
+ -- Question 11:
+DROP PROCEDURE IF EXISTS sp_DeleteDepartment;
+DELIMITER $$
+CREATE PROCEDURE sp_DeleteDepartment(IN	in_DepartmentName NVARCHAR(50))
+BEGIN
+	UPDATE 	`Account`
+    SET		DepartmentID = 10
+    WHERE	DepartmentID = (SELECT 	DepartmentID	
+							FROM	Department
+							WHERE 	DepartmentName = in_DepartmentName);
+	DELETE 
+    FROM	Department
+    WHERE	DepartmentName = in_DepartmentName;
+END$$
+DELIMITER ;
+
+
+-- Question 12: 
+DROP PROCEDURE IF EXISTS Q12;
+DELIMITER $$
+CREATE PROCEDURE Q12()
+BEGIN
+		SELECT EachMonthInYear.MONTH, COUNT(QuestionID) AS COUNT
+		FROM
+		(
+             SELECT 1 AS MONTH
+             UNION SELECT 2 AS MONTH
+             UNION SELECT 3 AS MONTH
+             UNION SELECT 4 AS MONTH
+             UNION SELECT 5 AS MONTH
+             UNION SELECT 6 AS MONTH
+             UNION SELECT 7 AS MONTH
+             UNION SELECT 8 AS MONTH
+             UNION SELECT 9 AS MONTH
+             UNION SELECT 10 AS MONTH
+             UNION SELECT 11 AS MONTH
+             UNION SELECT 12 AS MONTH
+        ) AS EachMonthInYear
+		LEFT JOIN Question ON EachMonthInYear.MONTH = MONTH(CreateDate)
+		GROUP BY EachMonthInYear.MONTH
+		ORDER BY EachMonthInYear.MONTH ASC;
+END$$
+DELIMITER ;
+
+
+-- Question 13: 
+DROP PROCEDURE IF EXISTS Q13;
+DELIMITER $$
+CREATE PROCEDURE Q13()
+BEGIN
+		SELECT Previous6Month.MONTH, COUNT(QuestionID) AS COUNT
+		FROM
+		(
+			SELECT MONTH(CURRENT_DATE - INTERVAL 5 MONTH) AS MONTH
+			UNION
+			SELECT MONTH(CURRENT_DATE - INTERVAL 4 MONTH) AS MONTH
+			UNION
+			SELECT MONTH(CURRENT_DATE - INTERVAL 3 MONTH) AS MONTH
+			UNION
+			SELECT MONTH(CURRENT_DATE - INTERVAL 2 MONTH) AS MONTH
+			UNION
+			SELECT MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AS MONTH
+			UNION
+			SELECT MONTH(CURRENT_DATE - INTERVAL 0 MONTH) AS MONTH
+        ) AS Previous6Month
+		LEFT JOIN Question ON Previous6Month.MONTH = MONTH(CreateDate)
+		GROUP BY Previous6Month.MONTH
+		ORDER BY Previous6Month.MONTH ASC;
+END$$
+DELIMITER ;
