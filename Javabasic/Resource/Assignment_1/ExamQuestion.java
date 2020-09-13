@@ -10,17 +10,16 @@ package assignment_1;
  *
  * @author admin
  */
+public class ExamQuestion {
+    int Examid;
+    int Questionid;
 
-public class Position {
-    int id;
-    String name;
-
-    public Position() {
+    public ExamQuestion() {
     }
 
-    public Position(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public ExamQuestion(int Examid, int Questionid) {
+        this.Examid = Examid;
+        this.Questionid = Questionid;
     }
     
 }
