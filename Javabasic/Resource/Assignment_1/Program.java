@@ -39,10 +39,11 @@ public class Program {
 		// Create account
 		Account account1 = new Account();
 		account1.id = 1;
+                account1.fullname = "Lethanhhung";
 		account1.email = "hung@gmail.com";
+                account1.position = position1;
+		account1.department = department1;
 		account1.groups = new Group[] { group1, group2 };
-
-		account1.fullname = "Le hung";
 		account1.createDate = LocalDate.now();
 		account1.username = "Hungleee";
 
@@ -50,7 +51,8 @@ public class Program {
 		account2.id = 2;
 		account2.email = "Hungeirk@gmail.com";
 		account2.groups = new Group[] { group1 };
-
+                account2.position = position2;
+		account2.department = department2;
 		account2.fullname = "Hung le";
 		account2.createDate = LocalDate.now();
 		account2.username = "hungleee";
@@ -71,8 +73,24 @@ public class Program {
 		// print account
 		System.out.println("\n\t\tAccount 1 information: \n");
 		System.out.println("id: " + account1.id);
+                System.out.println("Fullname "+ account1.fullname);
+                System.out.println("DepartmentId "+ account1.department.departmentID);
 		System.out.println("Email: " + account1.email);
 		System.out.println("Create Date: " + account1.createDate);
+                
+                System.out.println("\n\t\tAccount 1 information: \n");
+		System.out.println("id: " + account2.id);
+                System.out.println("Fullname "+ account2.fullname);
+                System.out.println("DepartmentId "+ account2.department.departmentID);
+		System.out.println("Email: " + account1.email);
+		System.out.println("Create Date: " + account1.createDate);
+                
+//                assignment2
+                if(account2.groups == null){
+                    System.out.println("nhân viên này chưa có phòng ban\n");
+                }else{
+                    System.out.println("Phòng ban của nhân viên này là " +department2.departmentName);
+                }
 
 	}
 }
