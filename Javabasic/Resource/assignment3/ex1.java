@@ -34,20 +34,41 @@ public class ex1 {
 	// Cách 1: convert số có 5 chữ số ra String, sau đó lấy 2 số cuối
 	// Cách 2: chia lấy dư số đó cho 100
 	public static void question23() {
-		int max = 99999;
-                int min =0;
-		int a = (int) (Math.random() * max)+ min ;
-		while (a < 10000) {
-			a = a * 10;
-		}
+                Random  x =new Random();
+                int m = x.nextInt(99999);
 		System.out.printf("===Question2======\n");
-		System.out.println("Số ngẫu nhiên: " + a);
+		System.out.println("Số ngẫu nhiên: " + m);
+                if(m<10000 && m>999){
+                    String s = "0"+m;
+                    System.out.println(s);
+                    System.out.println("Hai số cuối: " + s.substring(3));
+                }else if(m<1000 && m>99){
+                    String s ="00"+m;
+                    System.out.println(s);
+                    System.out.println("Hai số cuối: " + s.substring(3));
+                }else if(m<100 && m>9){
+                    String s ="000"+m;
+                    System.out.println(s);
+                    System.out.println("Hai số cuối: " + s.substring(3));
+                }else if(m<10 && m>0){
+                    String s ="0000"+m;
+                    System.out.println(s);
+                    System.out.println("Hai số cuối: " + s.substring(3));
+                }else{
+                    String s = String.valueOf(m);
+                    System.out.println(s);
+                    System.out.println("Hai số cuối: " + s.substring(3));
+                }
+//                System.out.println("======Question3=======");
+//		String b = String.valueOf(m);
+//		System.out.println("Hai số cuối: " + s.substring(3));
+        }
 
-		System.out.println("======Question3=======");
-		String b = String.valueOf(a);
-		System.out.println("Hai số cuối: " + b.substring(3));
-	}
+		
+            
 
+        
+        
 	
 }
 

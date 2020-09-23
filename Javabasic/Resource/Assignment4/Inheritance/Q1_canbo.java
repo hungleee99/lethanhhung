@@ -8,7 +8,9 @@
  * and open the template in the editor.
  */
 
-package Assignment5.Inheritance;
+package Assignment4.Inheritance;
+
+import java.util.Scanner;
 
 /**
  *
@@ -70,13 +72,30 @@ public class Q1_canbo {
             this.gender = Enum.valueOf("UNKNOW");
             }
     }
-
-//    public  void remove(){
-//            q1.remove(q1);   
-//    }
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return super.toString(); 
+    }
+    public  void nhap(){
+         Scanner nhap = new Scanner(System.in);
+               System.out.println("nhap ten: ");     
+               name = nhap.nextLine(); 
+               System.out.println("nhap tuoi: ");     
+               age = (nhap.nextInt()); 
+               System.out.println("nhap Gender: "); 
+               System.out.println("0 - FEMALE, 1 - MALE , Other -  UNKNOW");
+               setgt(nhap.nextInt());          
+               nhap.nextLine();
+               System.out.println("nhap dia chi: ");     
+               address = (nhap.nextLine());
     }
     
+    public void in(){
+            System.out.println("\nthong tin can bo\n");
+            System.out.println("Ten: "+this.name);
+            System.out.println("Tuoi: "+this.age);
+            System.out.println("gioitinh: "+this.gender);
+            System.out.println("dia chi: "+this.address);
+            
+    }
 }

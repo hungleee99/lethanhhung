@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Assignment5.Inheritance;
+package Assignment4.Inheritance;
 
 import java.util.Scanner;
 
@@ -27,6 +27,7 @@ public class Main {
         q2_qlcb.remove();
         System.out.println("\n\t\t danh sach sau khi xoa\n");
         q2_qlcb.in();
+        q2_qlcb.showkysu();
         System.exit(0);
     }
 }

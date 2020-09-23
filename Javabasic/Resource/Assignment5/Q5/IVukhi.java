@@ -8,18 +8,12 @@
  * and open the template in the editor.
  */
 
-package Assignment4.Inheritance;
+package assignment5.Ex2.Q5;
 
 /**
  *
  * @author admin
  */
-public class Q3_Person {
-    public String name;
-
-    public Q3_Person(String name) {
-        this.name = name;
-    }
-    
-    
+public interface IVukhi {
+    void Tancongkexau();
 }

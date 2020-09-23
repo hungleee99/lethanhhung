@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-package Assignment5.Inheritance;
+package Assignment4.Inheritance;
+
+import java.util.Scanner;
 
 /**
  *
@@ -20,6 +22,26 @@ public class NhanVien extends Q1_canbo{
         super(name, age, address);
         this.congviec = congviec;
     }
-    
+
+    public String getCongviec() {
+        return congviec;
+    }
+
+    public void setCongviec(String congviec) {
+        this.congviec = congviec;
+    }
+    @Override
+    public void nhap() {       
+               Scanner nhap = new Scanner(System.in);
+               System.out.println("nhap cong viec : ");     
+               congviec = nhap.nextLine();
+               super.nhap();
+    }
+
+    @Override
+    public void in() {
+        System.out.println("cong viec: "+this.congviec);
+        super.in();
+    }
     
 }

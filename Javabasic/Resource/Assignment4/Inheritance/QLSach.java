@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Assignment5.Inheritance;
+package Assignment4.Inheritance;
 
 import java.util.Scanner;
 

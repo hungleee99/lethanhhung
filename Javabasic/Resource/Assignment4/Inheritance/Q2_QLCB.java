@@ -7,7 +7,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assignment5.Inheritance;
+package Assignment4.Inheritance;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,21 +21,25 @@ public class Q2_QLCB {
     private ArrayList<Q1_canbo> canbos = new ArrayList<Q1_canbo>();
 
      public  void nhap(){
-         Q1_canbo canbo=new Q1_canbo();
         Scanner nhap = new Scanner(System.in);
-        System.out.println("nhap ten: ");     
-        canbo.setName(nhap.nextLine()); 
-        System.out.println("nhap tuoi: ");     
-        canbo.setAge(nhap.nextInt()); ;
-        System.out.println("nhap Gender: "); 
-        System.out.println("0 - FEMALE, 1 - MALE , Other -  UNKNOW");
-        canbo.setgt(nhap.nextInt());
-            
-        nhap.nextLine();
-        System.out.println("nhap dia chi: ");     
-        canbo.setAddress(nhap.nextLine());
-        
-        canbos.add(canbo);
+        System.out.println("nhap thong tin \n"); 
+        System.out.println("\n\t\tnhap\n 1-cong nhan \n 2-nhanvien\n 3-kysu \n"); 
+        int h = nhap.nextInt();
+        if(h==1){
+            Q1_canbo q1_canbo = new CongNhan();
+            q1_canbo.nhap();
+            canbos.add(q1_canbo);
+        }else if(h==2){
+            Q1_canbo q1_canbo = new NhanVien();
+            q1_canbo.nhap();
+            canbos.add(q1_canbo);
+        }else if(h==3){
+            Q1_canbo q1_canbo = new KiSu();
+            q1_canbo.nhap();
+            canbos.add(q1_canbo);
+        }
+
+               
     }
     public void in(){
         for (Q1_canbo q1_canbo : canbos) {
@@ -83,11 +87,13 @@ public void remove(){
     }
 
     else System.out.println ("xoa that bai\n");
-}
-////        e
-//
-//    System.exit (
-//
-//0);
-//    
+} 
+    public void showkysu(){
+        for (Q1_canbo q1_canbo : canbos) {
+            if(q1_canbo instanceof KiSu){
+                Q1_canbo ks = new KiSu();
+                ks.in();
+            }
+        }
+    }
 }
