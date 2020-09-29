@@ -9,30 +9,47 @@ package Assignment7.Ex5.Q2;
 import Assignment7.Ex5.Q1.IOStream;
 import Assignment7.Ex5.Q1.ScannerUtils;
 import java.time.DateTimeException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author admin
  */
-public class LogUtils extends MyException{
-    List<MyException> my;
-    String pathFile = "E:\\Exception.ser";
-    public void writeLog(String message, String reason,String StackTrace,DateTimeException time){
-        System.out.println("moi nhap message: ");
-        message = ScannerUtils.inputName();
-        System.out.println("moi nhap reason: ");
-        reason = ScannerUtils.inputName();
-        System.out.println("moi nhap StackTrace: ");
-        StackTrace = ScannerUtils.inputName();
-        System.out.println("moi nhap DateTimeException: 1/1/1999 ");
+public class LogUtils {
+    private List<MyException> my;
+    private String pathFile ;
+
+    public LogUtils() {
+        my = new ArrayList<>();
+        pathFile = "Exception.ser";
+    }
+    
+    public void writeLog(){
+        System.out.println("Input number Exception ");
+		int n = ScannerUtils.inputInt();
+
+		for (int i = 0; i < n; i++) {
+			my.add(new MyException());
+		}
 
     }
-    public void writeLog() throws Exception{
-        IOStream.writeObject(my, pathFile);
+
+    public void writeLog(MyException exception){
+        exception.StackTraceElement();
+        exception.runtimeExceptin();
+        my.add(exception);
     }
+    public void main() throws Exception {
+		IOStream.writeObject(my, pathFile);
+	}
     public void readLog() throws Exception{
         my = (List<MyException>) IOStream.readObject(pathFile);
+    }
+    
+    @Override
+    public String toString() {
+        return super.toString(); 
     }
     
 }

@@ -13,8 +13,8 @@ package Assignment7.Ex5.Q2;
 public class Main {
     public static void main(String[] args) throws Exception {
         LogUtils logUtils = new LogUtils();
-        logUtils.writeLog("dang dang nhap", "mua thu 7", "dang kiem thu", null);
         logUtils.writeLog();
+        logUtils.main();
         logUtils.readLog();
     }
 }

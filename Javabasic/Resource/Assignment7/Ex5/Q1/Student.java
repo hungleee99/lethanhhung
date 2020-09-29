@@ -1,34 +1,60 @@
-package Assignment7.Ex5.Q1;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-import Assignment7.Ex5.Q1.ScannerUtils;
-import java.io.Serializable;
+package Assignment7.Ex5.chuabai;
+
+import java.util.Scanner;
 
 
-public class Student implements Serializable {
+/**
+ *
+ * @author admin
+ */
+public class Student {
+    private String id;
+    private String name;
 
-	private static final long serialVersionUID = 1L;
+    public Student() {
+    }
 
-	private static int counter = 0;
+    public Student(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-	private int id;
-	private String name;
+    public String getId() {
+        return id;
+    }
 
-	public Student() {
-		this.id = ++counter;
-		input();
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public Student(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	private void input() {
-		System.out.println("Input name: ");
-		name = ScannerUtils.inputName();
-	}
-
-	@Override
-	public String toString() {
-		return "Student{" + "id=" + id + ", name='" + name + '\'' + '}';
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void nhap(){
+        Scanner s = new Scanner(System.in);
+        System.out.println("nhap id: ");
+        id  = s.nextLine();
+        System.out.println("nhap name: ");
+        name  = s.nextLine();
+        
+    }
+    public void in(){
+        System.out.println("id: "+id);
+        System.out.println("name: "+name);
+        
+    }
+	
+    public String toString(){
+        return getId() + "-"+getName();
+    }
 }

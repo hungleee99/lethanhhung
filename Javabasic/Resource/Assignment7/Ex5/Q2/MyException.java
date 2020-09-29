@@ -6,19 +6,32 @@
 
 package Assignment7.Ex5.Q2;
 
+import Assignment7.Ex5.Q1.ScannerUtils;
+import java.io.Serializable;
 import java.time.DateTimeException;
 
 /**
  *
  * @author admin
  */
-public class MyException extends  Exception{
+public class MyException extends  Exception implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String message;
     private String reason;
-    private String StackTrace;
-    private DateTimeException time;
+
+    public void StackTraceElement() {
+        new Exception("StackTrace").printStackTrace();
+    }
+    public void runtimeExceptin(){
+        try {
+            input();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
 
     public MyException() {
+        input();
     }
 
     public String getReason() {
@@ -28,22 +41,22 @@ public class MyException extends  Exception{
     public void setReason(String reason) {
         this.reason = reason;
     }
-
-    public void setStackTrace(String StackTrace) {
-        this.StackTrace = StackTrace;
+    private void input(){
+        System.out.println("moi nhap message: ");
+        message = ScannerUtils.inputName();
+        System.out.println("moi nhap reason: ");
+        reason = ScannerUtils.inputName();
+//        StackTraceElement();
+//        runtimeExceptin();
     }
-
-    public DateTimeException getTime() {
-        return time;
-    }
-
-    public void setTime(DateTimeException time) {
-        this.time = time;
+    public void in(){
+        System.out.println(" message: "+message);
+        System.out.println(" reason: "+reason);
     }
 
     @Override
     public String toString() {
-        return "MyException{"+ "id=" + message + ", name='" + reason+ ", StackTrace='" + StackTrace + '\'' + '}';
+        return "MyException{"+ "id=" + message + ", name='" + reason+ '}';
     }
     
 }
