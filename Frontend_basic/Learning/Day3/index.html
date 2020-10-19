@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- <script>
+            var obj = {
+                counter : 0,
+                fname :"abc",
+                lname: "bcs",
+                fullname: function(){
+                    return this.fname+ this.lname;
+                },
+                get increment(){
+                    this.counter++;
+                },
+                set add(value){
+                    this.counter+=value;
+                }               
+            }
+            console.log(obj !== undefined && obj !== null);
+            obj.add=3;
+            console.log(obj.counter);
+            console.log(obj.fullname());
+            obj.fullname(); -->
+            <!-- // var hoaqua = ["tao","le","man"];
+            // var ul = "<ul>";
+            // for(i=0;i<hoaqua.length;i++){
+            //     ul  += "<li>"+hoaqua[i]+ "</li>";
+            // }
+            // ul += "</ul>";
+            // console.log(ul); // hien thi danh console
+            // document.write(ul); //viet ve dang html
+            // document.write("<p>hunglee</p>");
+        // </script> -->
+        <!-- <script>
+            "use strict";
+            var x= 3.14;
+            console.log(x);
+        </script>
+        <script>
+            window.alert("loi roi");
+        </script> -->
+
+        <button onclick="Myfunction()">Click</button>
+        <p id="id" style="display: none;">begin</p>
+        <div id="add"></div>
+    </body>
+    <script>
+        function  Myfunction(){
+            // document.getElementById('id').style.display='block';
+            var hello = document.getElementById('id');
+            hello.style.display='block';
+            hello.innerHTML="after";
+            var name = document.createElement("p");
+            name.style.background="yellow";
+            name.innerHTML="add thanh cong";
+            document.getElementById("add").appendChild(name);
+        }
+    </script>
+</html>
