@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="../Bootstrap/jquery.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+		<input id="a" type="text" name="a">
+		<input id="b" type="text" name="b">
+		<button id="cong">+</button>
+		<button id="tru" name="tru">-</button>
+		<button id="nhan" name="nhan">x</button>
+		<button id="chia" name="chia">/</button>
+		<input id="kq" type="text" name="kq">
+		<h5 id="abc">aaaa</h5>
+</body>
+<script>
+	$(document).ready(function(){
+		$("#cong").click(function(){
+			var a= parseInt($("#a").val());
+			var b = parseInt($("#b").val());
+			var c = (a+b);
+			$("#kq").val(c);
+			document.getElementById("abc").innerHTML= c;
+		});
+		$("#tru").click(function(){
+			var a= $("#a").val();
+			var b = $("#b").val();
+			var c = a-b;
+			$("#kq").val(c);
+		});
+		$("#nhan").click(function(){
+			var a= $("#a").val();
+			var b = $("#b").val();
+			var c = a*b;
+			$("#kq").val(c);
+		});
+		$("#chia").click(function(){
+			var a= $("#a").val();
+			var b = $("#b").val();
+			var c = a/b;
+			$("#kq").val(c);
+		});
+	});
+</script>
+</html>

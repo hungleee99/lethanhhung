@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ass5_6</title>
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="popper.min.js"></script>
+<script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Add San Phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                <form action="thongtin.jsp">
+	                    <div class="modal-container">                   
+	                        <label for="name"><b>Họ Tên:</b></label>
+	                        <input type="text" placeholder="Enter Name" name="name" id="name" required><br> 	
+	                        <label for="hãng"><b>Năm sinh:</b></label>
+	                        <input type="text" placeholder="Enter namsinh" name="ns" id="ns" required><br> 	                                      
+	                        <label for="gt"><b>Gioi Tính:</b></label>
+							 <input type="radio" id="male" name="gender" value="male">
+							 <label for="male">Male</label>
+							 <input type="radio" id="female" name="gender" value="female">
+							 <label for="female">Female</label><br>
+	                        <label for="sdt"><b>Số điện thoại:</b></label>
+	                        <input type="text" placeholder="Enter sdt" name="sdt" id="sdt" required><br>               
+		                    <input type="submit" class="btn btn-primary" value="Thêm" >
+		                    <input type="reset" class="btn btn-secondary" value="Huy">
+		                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

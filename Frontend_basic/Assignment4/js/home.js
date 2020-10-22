@@ -15,37 +15,37 @@ function manager(){
 
 }
 var employees = [];
-var counter =0;
 
 // ham khoi tao 
-function Employee(name,department,phone){
-    this.id = ++counter;
+function Employee(id,name,department,phone){
+    this.id = id;
     this.name = name;
     this.department = department;
     this.phone = phone;
 }
 
-// truyền vào dữ liệu (database)
-function initEmployees(){
-    if(null== employees || employees.length==0){
-        employees.push(new Employee("John Doe","DEV","0312456789"));
-        employees.push(new Employee("John Witch","Manager","0312452555"));
-        employees.push(new Employee("Van Gan","Employee","9552620555"));
-    }
+// lấy dữ liệu (database)
+function getListEmployees(){
+    $.get("https://5f8d9c574c15c40016a1df4c.mockapi.io/students",function(data,status){
+        employees = [];
+        if(status =="error"){
+            alert("loi laoding data")
+            return;
+        }
+        parseData(data);
+        fillEmployeeToTable();
+    });
 }
 
-function buildtable(){
-    
-    setTimeout(function name(params){
-        // xoa ban ghi truoc khi cap nhap
-        $('tbody').empty();
-        
-        // khi load dữ liệu song thì tìm kiếm theo tên
-        search();
-        // chuyen du lieu vao
-        initEmployees();
+function parseData(data) {
+    data.forEach(function(item) {
+        employees.push(new Employee(item.id, item.name, item.department, item.phone));
+    });
+}
+
+function fillEmployeeToTable(){
         employees.forEach(function(item){
-            $('tbody').append(
+            $('#myTable').append(
                 '<tr>'+ 
                     '<td>'+item.name+'</td>'+
                     '<td>'+item.department+'</td>'+
@@ -56,10 +56,18 @@ function buildtable(){
                     '</td>'+
                 '</tr>')
           });
-    },500);
-
 }
 
+function buildtable(){
+    setTimeout(function name(params){
+        // xoa ban ghi truoc khi cap nhap
+        $('tbody').empty();
+        
+        // khi load dữ liệu song thì tìm kiếm theo tên
+        search();
+        getListEmployees();
+    },500);
+}
 function openAddModal(){
     // document.getElementById('modal-title').innerHTML = "ADD Employee";
     $('#modal-title').text("ADD Employee");
@@ -74,60 +82,58 @@ function openModal(){
 function hideModal(){
     $('#myModal').modal('hide');
 }
+
+// add employee
 function addEmployee(){
     //ko tao id
-
-    // Type DOM
-    // var name = document.getElementById("name").value;
-    // var department = document.getElementById("department").value;
-    // var phone = document.getElementById("phone").value;
-
-    // Type JQuery
     var name = $("#name").val();
     var department = $("#department").val();
     var phone = $("#phone").val();
     // add du lieu sau khi nhap
-    employees.push(new Employee(name,department,phone));
+    var employee ={
+        name:name,
+        department:department,
+        phone:phone
+    };
+    $.post("https://5f8d9c574c15c40016a1df4c.mockapi.io/students", employee,
+    function(data, status) {
+        // error
+        if (status == "error") {
+            alert("Error when loading data");
+            return;
+        }
     // dong modal
-    hideModal();
-    showSuccessAlert();
-    buildtable(); 
+        hideModal();
+        showSuccessAlert();
+        buildtable(); 
+    });
 }
-function resetform(){
-    // DOM --->
-    // document.getElementById("id").value="";
-    // document.getElementById("name").value="";
-    // document.getElementById("department").value="";
-    // document.getElementById("phone").value="";
 
-    // JQuery --->
+// reset form
+function resetform(){
     $("#id").val("");
     $("#name").val("");
     $("#department").val("");
     $("#phone").val("");
 }
 
+// update employee
 function openUpdateModal(id){
+    
     $('#modal-title').text("Update Employee");
     //get id
+
     var index = employees.findIndex(x => x.id == id);
-
     // fill data
-    // tao thuoc tinh id de update va KO tao o add
-
-    //  Type DOM
-    // document.getElementById("id").value=employees[index].id;
-    // document.getElementById("name").value=employees[index].name;
-    // document.getElementById("department").value=employees[index].department;
-    // document.getElementById("phone").value=employees[index].phone;
-
-    // Type JQuery
     $("#id").val(employees[index].id);
     $("#name").val(employees[index].name);
     $("#department").val(employees[index].department);
     $("#phone").val(employees[index].phone);
     openModal();
+    resetform();
 }
+
+// save in modal
 function save(){
     var id = document.getElementById("id").value;
     if(id== null || id == ""){
@@ -136,37 +142,36 @@ function save(){
         updateEmloyee();
     }
 }
+
+// action update
 function updateEmloyee(){
-    // test
-    console.log("oki");
-
-    // get list
-
-    // Type DOM
-    // var id =  document.getElementById("id").value;
-    // var name = document.getElementById("name").value;
-    // var department = document.getElementById("department").value;
-    // var phone = document.getElementById("phone").value;
-
-    // Type JQuery
     var id =  $("#id").val();
     var name = $("#name").val();
     var department = $("#department").val();
     var phone = $("#phone").val();
+    var employee ={
+        name:name,
+        department:department,
+        phone:phone
+    };
+    $.ajax({
+        url: 'https://5f8d9c574c15c40016a1df4c.mockapi.io/students/' + id,
+        type: 'PUT',
+        data: employee,
+        success: function(result) {
+            // error
+            if (result == undefined || result == null) {
+                alert("Error when loading data");
+                return;
+            }
 
-    var index = employees.findIndex(x => x.id == id);
-    console.log(index);
-    // add du lieu sau khi nhap
-
-    //update employee
-    employees[index].name =name;
-    employees[index].department =department;
-    employees[index].phone =phone;
-
-    // dong modal
-    hideModal();
-    showSuccessAlert();
-    buildtable(); 
+            // success
+            hideModal();
+            showSuccessAlert();
+            buildTable();
+            
+        }
+    });
 }
 function showSuccessAlert(){
     $('#success-alert').fadeTo(2000,500).slideUp(500,function(){
@@ -174,20 +179,37 @@ function showSuccessAlert(){
     });
 }
 
-function openConfirmDelete(id){
+function openConfirmDelete(id) {
+    
+    // get index from employee's id
     var index = employees.findIndex(x => x.id == id);
-    var name =employees[index].name;
-    var result = confirm("Want to delete "+ name +" ?");
+    var name = employees[index].name;
+
+    var result = confirm("Want to delete " + name + "?");
     if (result) {
-        //Logic to delete the item
+        resetform();
         deleteEmployee(id);
     }
 }
-function deleteEmployee(id){
-    var index = employees.findIndex(x => x.id == id);
-    employees.splice(index,1);
-    showSuccessAlert();
-    buildtable(); 
+
+function deleteEmployee(id) {
+    // TODO validate
+
+    $.ajax({
+        url: 'https://5f8d9c574c15c40016a1df4c.mockapi.io/students/' + id,
+        type: 'DELETE',
+        success: function(result) {
+            // error
+            if (result == undefined || result == null) {
+                alert("Error when loading data");
+                return;
+            }
+
+            // success
+            showSuccessAlert();
+            buildTable();
+        }
+    });
 }
 function search(){
     $(function(){

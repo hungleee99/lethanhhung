@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../../Bootstrap/jquery.min.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="container">
+            <div id="header"></div>
+            <div id="main"></div>
+                <div id="leftmenu" style="float: left;"></div>
+                <div id="contentmenu" style="width: 70%;"></div>
+                <div id="rightmenu" style="float: right;"></div>
+                <div style="clear: both;"></div>
+            </div>
+            <div id="footer"></div>
+        </div>
+    </body>
+    <script>
+        var students= [];
+        $(document).ready(function(){
+            $("#header").load("header.html");
+            // $("#main").load("main.html");
+            $("#leftmenu").load("leftmenu.html");
+            $("#contentmenu").load("contentmain.html");
+            $("#rightmenu").load("rightmenu.html");
+            $("#footer").load("footer.html");
+            $.get("https://5f8d9c574c15c40016a1df4c.mockapi.io/students",function(data,status){
+                students= [];
+                parseData(data);
+                fillStudentIntoTable();
+            });
+        });
+        function Student(id,name,department,phone){
+            this.id=id;
+            this.name=name;
+            this.department=department;
+            this.phone=phone; 
+        }
+        function parseData(data){
+            data.forEach(function(item){
+                students.push(new Student(item.id,item.name,item.department,item.phone));
+            });
+        }
+        function fillStudentIntoTable(){
+            students.forEach(function(item){
+                $("tbody").append(
+                    "<tr id=\""+item.id+"\">"+
+                        "<td>"+ item.name+"</td>"+
+                        "<td>"+ item.department+"</td>"+
+                        "<td>"+ item.phone+"</td>"+
+                    "</tr>"
+                )
+            });
+        }
+    </script>
+</html>
