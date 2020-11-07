@@ -44,6 +44,7 @@ function parseData(data) {
 }
 
 function fillEmployeeToTable(){
+		search();
         employees.forEach(function(item){
             $('#myTable').append(
                 '<tr>'+ 
@@ -64,7 +65,7 @@ function buildtable(){
         $('tbody').empty();
         
         // khi load dữ liệu song thì tìm kiếm theo tên
-        search();
+        
         getListEmployees();
     },500);
 }
@@ -130,7 +131,7 @@ function openUpdateModal(id){
     $("#department").val(employees[index].department);
     $("#phone").val(employees[index].phone);
     openModal();
-    resetform();
+
 }
 
 // save in modal
@@ -168,7 +169,7 @@ function updateEmloyee(){
             // success
             hideModal();
             showSuccessAlert();
-            buildTable();
+            buildtable(); 
             
         }
     });
@@ -187,7 +188,6 @@ function openConfirmDelete(id) {
 
     var result = confirm("Want to delete " + name + "?");
     if (result) {
-        resetform();
         deleteEmployee(id);
     }
 }
@@ -207,8 +207,9 @@ function deleteEmployee(id) {
 
             // success
             showSuccessAlert();
-            buildTable();
+            buildtable(); 
         }
+
     });
 }
 function search(){
